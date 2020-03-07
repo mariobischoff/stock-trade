@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <span class="d-flex justify-center display-2 mt-2">Portfólio</span>
+    <h1 class="d-flex justify-center display-3 font-weight-light mt-2">Portfólio</h1>
     <div class="d-flex flex-wrap justify-center mt-5" v-if="stocks.length > 0">
       <Stock
         portfolio
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Stock from '../components/Stock'
 
 export default {
@@ -24,9 +26,9 @@ export default {
     Stock
   },
   computed: {
-    stocks () {
-      return this.$store.getters.stockPortfolio
-    }
+    ...mapGetters({
+      stocks: 'stockPortfolio'
+    })
   }
 }
 </script>
