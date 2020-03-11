@@ -12,7 +12,7 @@
       </v-alert>
     </v-sheet>
     <v-divider></v-divider>
-    <h2 class="display-1 mt-4">Seu Saldo: R$ {{ funds | currency }}</h2>
+    <h2 class="display-1 mt-4">Seu Saldo: {{ funds | currency }}</h2>
   </v-container>
 </template>
 

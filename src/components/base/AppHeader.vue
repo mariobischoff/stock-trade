@@ -52,7 +52,7 @@
             <v-list-item-title>Salvar Dados</v-list-item-title>
           </v-list-item>
           <v-list-item
-            @click="loadData"
+            @click="loadDataLocal"
           >
             <v-list-item-title>Carregar Dados</v-list-item-title>
           </v-list-item>
@@ -62,11 +62,13 @@
 
 
     </v-toolbar-items>
-    <span class="font-weight-regular">Saldo: R$ {{ funds | currency }}</span>
+    <span class="font-weight-regular">Saldo: {{ funds | currency }}</span>
   </v-app-bar>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'AppHeader',
   data () {
@@ -81,14 +83,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['randomizeStock', 'loadData']),
     newDay () {
-      this.$store.dispatch('changePrice')
+      this.randomizeStock()
     },
-    loadData () {
-      this.$$store.dispatch('loadData')
+    loadDataLocal () {
+      this.loadData()
     },
     saveData () {
-      this.$store.dispatch('saveData')
+      const { funds, stockPortfolio, stocks } = this.$store.getters
+      this.$http.put('data.json', { funds, stockPortfolio, stocks })
     }
   },
   computed: {

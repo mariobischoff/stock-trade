@@ -1,17 +1,20 @@
 <template>
   <v-card
     class="ma-2"
-    width="350px"
+    width="370px"
   >
     <v-toolbar :color="portfolio ? 'primary' : 'green'">
       {{ stock.name }}
       <v-spacer />
-      Preço: R$ {{ stock.price | currency }} {{ portfolio ? 'Qnt: ' + stock.quantity : ''}}
+      Preço: {{ stock.price | currency }} {{ portfolio ? 'Qnt: ' + stock.quantity : ''}}
     </v-toolbar>
-    <v-card-text class="d-flex justify-center">
+    <v-card-text class="d-flex align-center justify-space-between">
       <v-text-field
+        style="max-width: 220px"
+        class="mr-2"
         type="number"
         v-model.number="quantity"
+        :error="(portfolio ? hasNotQuantity : insufficientFunds) || !Number.isInteger(quantity)"
         :rules="[]"
         label="Quantidade"
       />
@@ -21,7 +24,7 @@
         :disabled="(portfolio ? hasNotQuantity : insufficientFunds) || quantity <= 0 || !Number.isInteger(quantity)"
         @click="fire()"
       >
-        {{ portfolio ? 'Vender' : 'Comprar' }}
+        {{ portfolio ? 'Vender' : 'Comprar'  }}
       </v-btn>
     </v-card-text>
   </v-card>
